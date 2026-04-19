@@ -16,6 +16,7 @@ class UserController extends Controller
             ->when($request->search, function ($q, $search) {
                 $q->whereAny(['name', 'email'], 'LIKE', "%$search%");
             })
+            ->latest()
             ->paginate(10)
             ->withQueryString();
 

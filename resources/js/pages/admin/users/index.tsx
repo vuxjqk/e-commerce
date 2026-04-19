@@ -50,7 +50,7 @@ export default function Index() {
                     </TableHeader>
                     <TableBody>
                         {users.data.map((user) => (
-                            <TableRow>
+                            <TableRow key={user.id}>
                                 <TableCell>#{user.id}</TableCell>
                                 <TableCell className="flex gap-2">
                                     <Avatar className="h-8 w-8 overflow-hidden rounded-full">
@@ -108,7 +108,7 @@ export default function Index() {
                         {users.links
                             .filter((link) => !isNaN(link.label))
                             .map((link) => (
-                                <PaginationItem>
+                                <PaginationItem key={link.label}>
                                     <PaginationLink
                                         href={link.url}
                                         isActive={link.active}

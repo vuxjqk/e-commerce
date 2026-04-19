@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -13,6 +14,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('admin')->name('admin')->group(function () {
         Route::get('users', [UserController::class, 'index'])->name('users.index');
+
+        Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
+        Route::post('brands', [BrandController::class, 'store'])->name('brands.store');
+        Route::put('brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
+        Route::delete('brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
     });
 });
 

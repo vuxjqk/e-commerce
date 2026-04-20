@@ -1,4 +1,4 @@
-import { Form, Head, usePage } from '@inertiajs/react';
+import { Form, Head, Link, usePage } from '@inertiajs/react';
 import { index, show } from '@/routes/adminproducts';
 import ProductController from '@/actions/App/Http/Controllers/Admin/ProductController';
 import { Label } from '@/components/ui/label';
@@ -18,8 +18,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
 import ImageController from '@/actions/App/Http/Controllers/Admin/ImageController';
-import { Delete, Star, Upload } from 'lucide-react';
+import { Star, Upload } from 'lucide-react';
 import DeleteModal from '@/components/delete-modal';
+import { index as variantIndex } from '@/routes/adminvariants';
 
 export default function Show() {
     const { product, brands } = usePage().props;
@@ -29,6 +30,14 @@ export default function Show() {
         <>
             <Head title="Sản phẩm" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                <div className="space-x-4">
+                    <Button size="sm">Chi tiết</Button>
+
+                    <Button size="sm" variant="ghost">
+                        <Link href={variantIndex(product.id)}>Biến thể</Link>
+                    </Button>
+                </div>
+
                 <Form
                     {...ProductController.update.form(product.id)}
                     options={{

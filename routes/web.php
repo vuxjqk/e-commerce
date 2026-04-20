@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +24,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('products', [ProductController::class, 'index'])->name('products.index');
         Route::post('products', [ProductController::class, 'store'])->name('products.store');
+        Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
         Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+        Route::post('images/{product}', [ImageController::class, 'store'])->name('images.store');
+        Route::patch('images/{image}', [ImageController::class, 'setMain'])->name('images.setMain');
+        Route::delete('images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
     });
 });
 

@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -45,6 +46,13 @@ class ProductController extends Controller
         return back()->with('success', 'Thêm sản phẩm thành công');
     }
 
+    public function show(Product $product)
+    {
+        $product->load('images');
+        $brands = Brand::all();
+        return Inertia::render('admin/products/show', compact('product', 'brands'));
+    }
+
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
@@ -63,7 +71,13 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         try {
+            $paths = $product->images()->pluck('path')->toArray();
+
             $product->delete();
+
+            if (!empty($paths)) {
+                Storage::disk('public')->delete($paths);
+            }
 
             return back()->with('success', 'Xóa sản phẩm thành công');
         } catch (QueryException $e) {

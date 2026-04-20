@@ -1,4 +1,4 @@
-import { Form, Head, usePage } from '@inertiajs/react';
+import { Form, Head, Link, usePage } from '@inertiajs/react';
 import ProductController from '@/actions/App/Http/Controllers/Admin/ProductController';
 import { Input } from '@/components/ui/input';
 import {
@@ -17,10 +17,12 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
-import { index } from '@/routes/adminproducts';
+import { index, show } from '@/routes/adminproducts';
 import DeleteModal from '@/components/delete-modal';
 import Edit from './edit';
 import Create from './create';
+import { Eye } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function Index() {
     const { products, brands, filters } = usePage().props;
@@ -73,6 +75,14 @@ export default function Index() {
                                         : 'Không hoạt động'}
                                 </TableCell>
                                 <TableCell className="space-x-1">
+                                    <Link href={show(product.id)}>
+                                        <Button
+                                            variant="outline"
+                                            size="icon-xs"
+                                        >
+                                            <Eye className="text-blue-500" />
+                                        </Button>
+                                    </Link>
                                     <Edit
                                         formConfig={ProductController.update.form(
                                             product.id,
